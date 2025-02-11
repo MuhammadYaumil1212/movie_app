@@ -1,4 +1,8 @@
 import 'package:day_watch/commons/widget/app_scaffold.dart';
+import 'package:day_watch/data/authentication/models/authentication.dart';
+import 'package:day_watch/data/authentication/repositories/authentication.dart';
+import 'package:day_watch/data/authentication/source/authentication_service.dart';
+import 'package:day_watch/domain/authentication/usecases/signup.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../commons/widget/app_button.dart';
@@ -17,6 +21,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
@@ -85,7 +90,23 @@ class _SignupScreenState extends State<SignupScreen> {
 
   Widget _buttonSignIn() {
     return AppButton(
-      onPressed: () {},
+      onPressed: () async {
+        _confirmPasswordController.text == _passwordController.text
+            ? SignupUsecase(
+                authRepository: AuthenticationRepositoryImpl(
+                  authApiService: AuthenticationServiceImpl(),
+                ),
+              ).call(
+                params: SignupRequestParams(
+                    email: _emailController.text,
+                    password: _passwordController.text),
+              )
+            : ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Your password must be same"),
+                ),
+              );
+      },
       textButton: "Sign Up",
     );
   }
