@@ -92,7 +92,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget _buttonSignUp(BuildContext context) {
     return AppButton(
       onPressed: () async {
-        await sl<SignupUsecase>().call(
+        return await sl<SignupUsecase>().call(
           params: SignupRequestParams(
             email: _emailController.text,
             password: _passwordController.text,
