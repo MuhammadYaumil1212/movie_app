@@ -1,6 +1,6 @@
-import 'package:day_watch/commons/helper/navigation/app_navigation.dart';
+import 'package:day_watch/core/helper/navigation/app_navigation.dart';
 import 'package:day_watch/core/config/assets/app_image.dart';
-import 'package:day_watch/presentations/authenticated/pages/signin/signin_screen.dart';
+import 'package:day_watch/presentations/authentication/pages/signin/signin_screen.dart';
 import 'package:day_watch/presentations/home/pages/home_screen.dart';
 import 'package:day_watch/presentations/splash/bloc/splash_cubit.dart';
 import 'package:flutter/material.dart';
