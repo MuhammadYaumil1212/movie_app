@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../commons/widget/app_button.dart';
 import '../../../../commons/widget/app_textfield.dart';
+import '../../../../service_locator.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -92,14 +93,11 @@ class _SignupScreenState extends State<SignupScreen> {
     return AppButton(
       onPressed: () async {
         _confirmPasswordController.text == _passwordController.text
-            ? SignupUsecase(
-                authRepository: AuthenticationRepositoryImpl(
-                  authApiService: AuthenticationServiceImpl(),
-                ),
-              ).call(
+            ? await sl<SignupUsecase>().call(
                 params: SignupRequestParams(
-                    email: _emailController.text,
-                    password: _passwordController.text),
+                  email: _emailController.text,
+                  password: _passwordController.text,
+                ),
               )
             : ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(

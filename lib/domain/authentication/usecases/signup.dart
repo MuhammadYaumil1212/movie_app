@@ -4,13 +4,12 @@ import 'package:day_watch/data/authentication/models/authentication.dart';
 import 'package:day_watch/data/authentication/repositories/authentication.dart';
 import 'package:day_watch/domain/authentication/repositories/authentication.dart';
 
-class SignupUsecase extends Usecase<Either, SignupRequestParams> {
-  final AuthRepository authRepository;
-  SignupUsecase({required this.authRepository});
+import '../../../service_locator.dart';
 
+class SignupUsecase extends Usecase<Either, SignupRequestParams> {
   @override
   Future<Either> call({SignupRequestParams? params}) async {
     // TODO: implement call
-    return await authRepository.signUp(params!);
+    return await sl<AuthRepository>().signUp(params!);
   }
 }
