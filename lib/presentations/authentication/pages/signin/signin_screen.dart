@@ -1,10 +1,16 @@
-import 'package:day_watch/commons/helper/navigation/app_navigation.dart';
-import 'package:day_watch/commons/widget/app_button.dart';
-import 'package:day_watch/commons/widget/app_scaffold.dart';
-import 'package:day_watch/commons/widget/app_textfield.dart';
-import 'package:day_watch/presentations/authenticated/pages/signup/signup_screen.dart';
+import 'package:day_watch/core/helper/message/message.dart';
+import 'package:day_watch/core/helper/navigation/app_navigation.dart';
+import 'package:day_watch/core/widget/app_button.dart';
+import 'package:day_watch/core/widget/app_scaffold.dart';
+import 'package:day_watch/core/widget/app_textfield.dart';
+import 'package:day_watch/data/authentication/models/signinRequestParams.dart';
+import 'package:day_watch/domain/authentication/usecases/signin.dart';
+import 'package:day_watch/presentations/authentication/pages/signup/signup_screen.dart';
+import 'package:day_watch/presentations/home/pages/home_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../service_locator.dart';
 
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
@@ -36,24 +42,6 @@ class _SigninScreenState extends State<SigninScreen> {
         ],
       ),
     );
-  }
-
-  Widget? _checkInput() {
-    if (_emailController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Email is empty"),
-        ),
-      );
-    }
-    if (_passwordController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Password is empty"),
-        ),
-      );
-    }
-    return null;
   }
 
   Widget _signInText() {
@@ -88,6 +76,29 @@ class _SigninScreenState extends State<SigninScreen> {
       },
       textButton: "Sign In",
     );
+  }
+
+  void _checkInput() async {
+    if (_emailController.text.isEmpty) {
+      DisplayMessage.errorMessage("Email is empty", context);
+    } else if (_passwordController.text.isEmpty) {
+      DisplayMessage.errorMessage("Password is empty", context);
+    } else {
+      final result = await sl<SigninUsecase>().call(
+        params: SigninrequestParams(
+          email: _emailController.text,
+          password: _passwordController.text,
+        ),
+      );
+      result.fold(
+        (error) {
+          DisplayMessage.errorMessage(error, context);
+        },
+        (data) {
+          AppNavigator.pushAndRemove(context, HomeScreen());
+        },
+      );
+    }
   }
 
   Widget _signUpText() {

@@ -1,12 +1,13 @@
-import 'package:day_watch/commons/widget/app_scaffold.dart';
-import 'package:day_watch/data/authentication/models/authentication.dart';
-import 'package:day_watch/data/authentication/repositories/authentication.dart';
-import 'package:day_watch/data/authentication/source/authentication_service.dart';
+import 'package:day_watch/core/helper/message/message.dart';
+import 'package:day_watch/core/helper/navigation/app_navigation.dart';
+import 'package:day_watch/core/widget/app_scaffold.dart';
+import 'package:day_watch/data/authentication/models/signupRequestParams.dart';
 import 'package:day_watch/domain/authentication/usecases/signup.dart';
+import 'package:day_watch/presentations/authentication/pages/signin/signin_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../commons/widget/app_button.dart';
-import '../../../../commons/widget/app_textfield.dart';
+import '../../../../core/widget/app_button.dart';
+import '../../../../core/widget/app_textfield.dart';
 import '../../../../service_locator.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -41,7 +42,7 @@ class _SignupScreenState extends State<SignupScreen> {
             const SizedBox(height: 30),
             _confirmPasswordTextfield(),
             const SizedBox(height: 40),
-            _buttonSignIn(),
+            _buttonSignUp(),
             const SizedBox(height: 15),
           ],
         ),
@@ -89,23 +90,39 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Widget _buttonSignIn() {
+  Widget _buttonSignUp() {
     return AppButton(
-      onPressed: () async {
-        _confirmPasswordController.text == _passwordController.text
-            ? await sl<SignupUsecase>().call(
-                params: SignupRequestParams(
-                  email: _emailController.text,
-                  password: _passwordController.text,
-                ),
-              )
-            : ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text("Your password must be same"),
-                ),
-              );
+      onPressed: () {
+        _checkInput();
       },
       textButton: "Sign Up",
     );
+  }
+
+  void _checkInput() async {
+    if (_passwordController.text == _confirmPasswordController.text) {
+      final result = await sl<SignupUsecase>().call(
+        params: SignupRequestParams(
+          email: _emailController.text,
+          password: _passwordController.text,
+        ),
+      );
+      result.fold(
+        (error) {
+          DisplayMessage.errorMessage(error, context);
+        },
+        (data) {
+          DisplayMessage.successMessage(
+              "Success! Welcome to day watch", context);
+          _usernameController.text = "";
+          _emailController.text = "";
+          _passwordController.text = "";
+          _confirmPasswordController.text = "";
+          AppNavigator.pushReplacement(context, SigninScreen());
+        },
+      );
+    } else {
+      DisplayMessage.errorMessage("Your password must be the same", context);
+    }
   }
 }

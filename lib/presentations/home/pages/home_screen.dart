@@ -13,7 +13,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          children: [Text("Home Screen")],
+          children: [
+            Text("Home Screen"),
+          ],
         ),
       ),
     );
