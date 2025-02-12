@@ -98,18 +98,10 @@ class _SignupScreenState extends State<SignupScreen> {
             password: _passwordController.text,
           ),
         );
-        _usernameController.text = "";
-        _emailController.text = "";
-        _passwordController.text = "";
-        _confirmPasswordController.text = "";
-        AppNavigator.pushReplacement(context, SigninScreen());
       },
       title: "Sign Up",
       onSuccess: () {
-        DisplayMessage.successMessage(
-          "Welcome ${_usernameController.text}!",
-          context,
-        );
+        AppNavigator.pushAndRemove(context, SigninScreen());
       },
       onFailure: (String error) {
         DisplayMessage.errorMessage(error, context);

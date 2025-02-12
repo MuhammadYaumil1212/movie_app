@@ -31,6 +31,7 @@ class AppButton extends StatelessWidget {
           if (state is ButtonSuccessState) {
             onSuccess();
           } else if (state is ButtonFailureState) {
+            print("error :${state.errorMessage}");
             onFailure(state.errorMessage);
           }
         },
@@ -48,7 +49,7 @@ class AppButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: null,
         style: ElevatedButton.styleFrom(
-          disabledBackgroundColor: Colors.grey,
+          disabledBackgroundColor: AppColors.primary,
           minimumSize:
               Size(width ?? MediaQuery.of(context).size.width, height ?? 60),
         ),

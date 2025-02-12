@@ -71,23 +71,21 @@ class _SigninScreenState extends State<SigninScreen> {
 
   Widget _buttonSignIn(BuildContext context) {
     return AppButton(
-      onPressed: () async {
-        await sl<SigninUsecase>().call(
-          params: SigninrequestParams(
-            email: _emailController.text,
-            password: _passwordController.text,
-          ),
-        );
-        AppNavigator.pushReplacement(context, HomeScreen());
-      },
-      title: "Sign In",
-      onSuccess: () async {
-        DisplayMessage.successMessage("Welcome Back! ", context);
-      },
-      onFailure: (String error) {
-        DisplayMessage.errorMessage(error, context);
-      },
-    );
+        onPressed: () async {
+          return await sl<SigninUsecase>().call(
+            params: SigninrequestParams(
+              email: _emailController.text,
+              password: _passwordController.text,
+            ),
+          );
+        },
+        title: "Sign In",
+        onSuccess: () {
+          AppNavigator.pushAndRemove(context, HomeScreen());
+        },
+        onFailure: (String error) {
+          DisplayMessage.errorMessage(error, context);
+        });
   }
 
   Widget _signUpText() {
