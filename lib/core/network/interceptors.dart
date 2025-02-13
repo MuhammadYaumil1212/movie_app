@@ -1,3 +1,5 @@
+import 'package:day_watch/core/constants/string.dart';
+import 'package:day_watch/core/helper/storage/AppStorage.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
@@ -30,5 +32,15 @@ class LoggerInterceptor extends Interceptor {
         'HEADERS: ${response.headers} \n'
         'Data: ${response.data}'); // Debug log
     handler.next(response); // continue with the Response
+  }
+}
+
+class AuthorizationInterceptor extends Interceptor {
+  @override
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    final storage = AppStorage.instance;
+    final getToken = storage.get(AppString.TOKEN_KEY);
+    options.headers['Authorization'] = "Bearer $getToken";
+    handler.next(options); // continue with the Request
   }
 }
