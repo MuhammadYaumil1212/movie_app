@@ -15,11 +15,6 @@ class _AppScaffoldState extends State<AppScaffold> {
     return Scaffold(
       appBar: widget.appBar,
       body: SafeArea(
-        minimum: const EdgeInsets.only(
-          top: 100,
-          right: 16,
-          left: 16,
-        ),
         child: widget.appWidget,
       ),
     );
