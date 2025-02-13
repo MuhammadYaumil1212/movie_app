@@ -1,3 +1,5 @@
+import 'package:day_watch/core/config/assets/app_image.dart';
+
 class MovieEntity {
   String? backdropPath;
   int? id;
@@ -32,4 +34,10 @@ class MovieEntity {
     this.voteAverage,
     this.voteCount,
   });
+
+  String providePosterPath() {
+    return posterPath != null
+        ? AppImage.movieImageBasePath + posterPath!
+        : AppImage.defaultImage;
+  }
 }

@@ -26,6 +26,7 @@ class BasicAppbar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: backgroundColor,
       elevation: 0,
       centerTitle: true,
+      surfaceTintColor: Colors.transparent,
       automaticallyImplyLeading: false,
       toolbarHeight: height ?? 80,
       title: title ?? const Text(""),

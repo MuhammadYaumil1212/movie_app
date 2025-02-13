@@ -9,6 +9,8 @@ import '../../../service_locator.dart';
 
 abstract class MovieService {
   Future<Either> getTrendingMovies();
+  Future<Either> getPlayingNow();
+  Future<Either> getTvShow();
 }
 
 class MovieServiceImpl extends MovieService {
@@ -17,6 +19,28 @@ class MovieServiceImpl extends MovieService {
     // TODO: implement getTrendingMovies
     try {
       var response = await sl<DioClient>().get(ApiUrl.trendingMovies);
+      return Right(response.data);
+    } on DioException catch (e) {
+      return Left(e.response?.data['message'] ?? "Something Gone Wrong!");
+    }
+  }
+
+  @override
+  Future<Either> getPlayingNow() async {
+    // TODO: implement getPlayingNow
+    try {
+      var response = await sl<DioClient>().get(ApiUrl.nowPlayingMovies);
+      return Right(response.data);
+    } on DioException catch (e) {
+      return Left(e.response?.data['message'] ?? "Something Gone Wrong!");
+    }
+  }
+
+  @override
+  Future<Either> getTvShow() async {
+    // TODO: implement getTvShow
+    try {
+      var response = await sl<DioClient>().get(ApiUrl.popularTV);
       return Right(response.data);
     } on DioException catch (e) {
       return Left(e.response?.data['message'] ?? "Something Gone Wrong!");

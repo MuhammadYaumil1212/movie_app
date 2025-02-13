@@ -7,7 +7,9 @@ import 'package:day_watch/domain/authentication/repositories/authentication.dart
 import 'package:day_watch/domain/authentication/usecases/signin.dart';
 import 'package:day_watch/domain/authentication/usecases/signup.dart';
 import 'package:day_watch/domain/movie/repositories/movie.dart';
+import 'package:day_watch/domain/movie/usecases/get_playing_now_movie.dart';
 import 'package:day_watch/domain/movie/usecases/get_trending_movies.dart';
+import 'package:day_watch/domain/movie/usecases/get_tv_popular_show.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
@@ -23,4 +25,6 @@ void setupServiceLocator() {
   sl.registerSingleton<SignupUsecase>(SignupUsecase());
   sl.registerSingleton<SigninUsecase>(SigninUsecase());
   sl.registerSingleton<GetTrendingMoviesUsecase>(GetTrendingMoviesUsecase());
+  sl.registerSingleton<GetPlayingNowMovie>(GetPlayingNowMovie());
+  sl.registerSingleton<GetTvPopularShow>(GetTvPopularShow());
 }

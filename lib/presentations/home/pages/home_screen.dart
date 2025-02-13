@@ -1,8 +1,10 @@
 import 'package:day_watch/core/config/assets/app_vectors.dart';
 import 'package:day_watch/core/widget/app_bar.dart';
 import 'package:day_watch/core/widget/app_scaffold.dart';
-import 'package:day_watch/presentations/widgets/trending.dart';
-import 'package:day_watch/presentations/widgets/trending_text.dart';
+import 'package:day_watch/presentations/home/widgets/playing_now.dart';
+import 'package:day_watch/presentations/home/widgets/trending.dart';
+import 'package:day_watch/presentations/home/widgets/trending_text.dart';
+import 'package:day_watch/presentations/home/widgets/tv_popular_show.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -32,16 +34,19 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      appWidget: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 16),
-            child: TrendingText(),
-          ),
-          TrendingMovies(),
-        ],
+      appWidget: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            CatalogText(title: "Trendings 🔥"),
+            TrendingMovies(),
+            CatalogText(title: "Playing Now"),
+            PlayingNow(),
+            CatalogText(title: "Tv Popular Show"),
+            TvPopularShow()
+          ],
+        ),
       ),
     );
   }
