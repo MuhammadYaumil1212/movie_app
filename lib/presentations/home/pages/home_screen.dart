@@ -2,6 +2,7 @@ import 'package:day_watch/core/config/assets/app_vectors.dart';
 import 'package:day_watch/core/widget/app_bar.dart';
 import 'package:day_watch/core/widget/app_scaffold.dart';
 import 'package:day_watch/presentations/widgets/trending.dart';
+import 'package:day_watch/presentations/widgets/trending_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -20,8 +21,8 @@ class _HomeScreenState extends State<HomeScreen> {
         hideback: true,
         title: SvgPicture.asset(
           AppVectors.logo,
-          width: 150.0,
-          height: 150.0,
+          width: 100.0,
+          height: 100.0,
         ),
         action: Padding(
           padding: const EdgeInsets.only(right: 15),
@@ -32,7 +33,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       appWidget: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          TrendingText(),
           TrendingMovies(),
         ],
       ),
