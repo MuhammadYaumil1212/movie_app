@@ -36,7 +36,10 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          TrendingText(),
+          Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: TrendingText(),
+          ),
           TrendingMovies(),
         ],
       ),
