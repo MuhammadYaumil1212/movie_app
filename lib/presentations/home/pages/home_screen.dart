@@ -32,7 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       appWidget: Column(
-        children: [TrendingMovies()],
+        children: [
+          TrendingMovies(),
+        ],
       ),
     );
   }
